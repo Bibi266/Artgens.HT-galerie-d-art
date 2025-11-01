@@ -4,11 +4,13 @@ import { useArtwork, API_URL } from "../context/ArtworkContext";
 
 const ArtworkContext = createContext();
 
-// 🌍 URL dynamique : localhost ↔ Render
-const isLocalhost = window.location.hostname === "localhost";
-export const API_URL = isLocalhost
-  ? "http://127.0.0.1:5555/api"
-  : "https://artgens-ht-2.onrender.com/api";
+// 🌍 URL dynamique : utilise Render en ligne, sinon localhost
+const API_URL =
+  process.env.REACT_APP_API_URL
+    ? `${process.env.REACT_APP_API_URL}/api`
+    : window.location.hostname.includes("localhost")
+    ? "http://127.0.0.1:5555/api"
+    : "https://artgens-ht-2.onrender.com/api";
 
 console.log("🔗 API_URL utilisée :", API_URL);
 
